@@ -8,955 +8,640 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg: #FAFAF8;
-  --surface: #FFFFFF;
-  --bleu: #1B2B4B;
-  --bleu-soft: #2D4270;
-  --terra: #D4622A;
-  --terra-light: #F5E6DE;
-  --vert: #2E7D52;
-  --vert-light: #E0F0E8;
-  --gris: #8A8680;
-  --gris-light: #F0EFED;
-  --texte: #1A1A18;
-  --or: #C9943A;
-  --violet: #6B3D8A;
-  --violet-light: #EDE5F5;
-  --bleu-light: #E4EAF5;
-  --nav-h: 72px;
+  --bg: #FAFAF8; --surface: #FFFFFF; --bleu: #1B2B4B; --bleu-soft: #2D4270;
+  --terra: #D4622A; --terra-light: #F5E6DE; --vert: #2E7D52; --vert-light: #E0F0E8;
+  --gris: #8A8680; --gris-light: #F0EFED; --texte: #1A1A18;
+  --violet: #6B3D8A; --violet-light: #EDE5F5; --bleu-light: #E4EAF5; --nav-h: 72px;
 }
+html, body { height: 100%; background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--texte); -webkit-font-smoothing: antialiased; overscroll-behavior: none; }
 
-html, body {
-  height: 100%;
-  background: var(--bg);
-  font-family: 'DM Sans', sans-serif;
-  color: var(--texte);
-  -webkit-font-smoothing: antialiased;
-  overscroll-behavior: none;
-}
-
-.app-header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 50;
-  background: var(--bg);
-  padding: 1rem 1.25rem 0.75rem;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-}
-
-.header-meta {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gris);
-  margin-bottom: 0.2rem;
-}
-
-.header-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.65rem;
-  line-height: 1.1;
-  color: var(--bleu);
-}
-
+/* HEADER */
+.app-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: var(--bg); padding: 0.9rem 1.25rem 0.65rem; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.header-row { display: flex; align-items: center; justify-content: space-between; }
+.header-meta { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gris); margin-bottom: 0.2rem; }
+.header-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; line-height: 1.1; color: var(--bleu); }
 .header-title em { font-style: italic; color: var(--terra); }
 
-.app-scroll {
-  position: fixed;
-  top: 90px;
-  bottom: var(--nav-h);
-  left: 0; right: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
-}
+/* LANG SWITCH */
+.lang-switch { display: flex; background: var(--gris-light); border-radius: 20px; padding: 2px; gap: 2px; flex-shrink: 0; }
+.lang-btn { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.3rem 0.65rem; border-radius: 18px; border: none; background: transparent; color: var(--gris); cursor: pointer; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+.lang-btn.active { background: var(--bleu); color: #fff; }
 
+/* SCROLL */
+.app-scroll { position: fixed; top: 88px; bottom: var(--nav-h); left: 0; right: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain; }
 .panel { display: none; padding: 1.25rem 1.25rem 2rem; min-height: 100%; }
 .panel.active { display: block; animation: slideUp 0.25s ease; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+/* DAY HERO */
+.day-hero { background: var(--bleu); border-radius: 16px; padding: 1.4rem 1.25rem 1.25rem; margin-bottom: 1.25rem; position: relative; overflow: hidden; }
+.day-hero::before { content: ''; position: absolute; right: -20px; top: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(212,98,42,0.15); }
+.day-hero-date { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.3rem; }
+.day-hero-title { font-family: 'DM Serif Display', serif; font-size: 1.55rem; line-height: 1.15; color: #fff; margin-bottom: 0.5rem; }
+.day-hero-desc { font-size: 0.82rem; color: rgba(255,255,255,0.65); line-height: 1.5; font-weight: 300; }
 
-.day-hero {
-  background: var(--bleu);
-  border-radius: 16px;
-  padding: 1.4rem 1.25rem 1.25rem;
-  margin-bottom: 1.25rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.day-hero::before {
-  content: '';
-  position: absolute;
-  right: -20px; top: -20px;
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  background: rgba(212,98,42,0.15);
-}
-
-.day-hero-date {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 0.3rem;
-}
-
-.day-hero-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.55rem;
-  line-height: 1.15;
-  color: #fff;
-  margin-bottom: 0.5rem;
-}
-
-.day-hero-desc {
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.65);
-  line-height: 1.5;
-  font-weight: 300;
-}
-
-.alert {
-  background: var(--terra-light);
-  border-left: 3px solid var(--terra);
-  border-radius: 10px;
-  padding: 0.85rem 1rem;
-  font-size: 0.8rem;
-  color: #6B2E10;
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
-}
+/* ALERT */
+.alert { background: var(--terra-light); border-left: 3px solid var(--terra); border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.8rem; color: #6B2E10; line-height: 1.5; margin-bottom: 1.25rem; }
 .alert strong { color: var(--terra); font-weight: 600; }
 .alert.is-info { background: var(--bleu-light); border-left-color: var(--bleu); color: #1B2B4B; }
 .alert.is-info strong { color: var(--bleu); }
 
-.sec-title {
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gris);
-  margin: 1.5rem 0 0.75rem;
-}
+/* SEC TITLE */
+.sec-title { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gris); margin: 1.5rem 0 0.75rem; }
 
+/* EVENT LIST */
 .event-list { display: flex; flex-direction: column; gap: 0.6rem; }
-
-.event-card {
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 0.9rem 1rem;
-  display: grid;
-  grid-template-columns: 52px 1fr;
-  gap: 0 0.75rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  position: relative;
-  overflow: hidden;
-}
-
-.event-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--gris-light);
-  border-radius: 3px 0 0 3px;
-}
-
+.event-card { background: var(--surface); border-radius: 12px; padding: 0.9rem 1rem; display: grid; grid-template-columns: 52px 1fr; gap: 0 0.75rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); position: relative; overflow: hidden; }
+.event-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gris-light); border-radius: 3px 0 0 3px; }
 .event-card.is-key::before   { background: var(--terra); }
 .event-card.is-resto::before { background: var(--violet); }
 .event-card.is-go::before    { background: var(--bleu-soft); }
-.event-card.is-ok::before    { background: var(--vert); }
+.event-time { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; color: var(--gris); line-height: 1.3; padding-top: 0.1rem; text-align: center; }
+.event-name { font-size: 0.92rem; font-weight: 600; color: var(--texte); line-height: 1.3; margin-bottom: 0.15rem; }
+.event-detail { font-size: 0.78rem; color: var(--gris); line-height: 1.45; font-weight: 300; }
 
-.event-time {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--gris);
-  line-height: 1.3;
-  padding-top: 0.1rem;
-  text-align: center;
-}
+/* CONNECTOR */
+.connector { display: flex; align-items: center; gap: 0.5rem; padding: 0 0 0 52px; margin: -0.2rem 0; position: relative; z-index: 1; }
+.connector::before { content: ''; position: absolute; left: 25px; top: 0; bottom: 0; width: 1px; background: var(--gris-light); }
+.connector a { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.22rem 0.6rem; border-radius: 20px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; -webkit-tap-highlight-color: transparent; transition: opacity 0.15s; }
+.connector a:active { opacity: 0.7; }
+.connector .c-waze { background: #1ECBE1; color: #fff; }
+.connector .c-gmap { background: #4285F4; color: #fff; }
 
-.event-name {
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--texte);
-  line-height: 1.3;
-  margin-bottom: 0.15rem;
-}
-
-.event-detail {
-  font-size: 0.78rem;
-  color: var(--gris);
-  line-height: 1.45;
-  font-weight: 300;
-}
-
+/* PILLS */
 .pills { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.4rem; }
+.pill { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 0.25rem; }
+.pill-ok   { background: var(--vert-light); color: var(--vert); }
+.pill-warn { background: var(--terra-light); color: #B34E1A; }
+.pill-opt  { background: var(--gris-light); color: var(--gris); }
+.pill-free { background: var(--bleu-light); color: var(--bleu); }
 
-.pill {
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.55rem;
-  border-radius: 20px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.pill-ok     { background: var(--vert-light); color: var(--vert); }
-.pill-warn   { background: var(--terra-light); color: #B34E1A; }
-.pill-opt    { background: var(--gris-light); color: var(--gris); }
-.pill-free   { background: var(--bleu-light); color: var(--bleu); }
-.pill-resto  { background: var(--violet-light); color: var(--violet); }
-.pill-waze   { background: #1ECBE1; color: #fff; }
-.pill-gmap   { background: #4285F4; color: #fff; }
-
-/* Nav links look tappable */
-a.pill-waze, a.pill-gmap {
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-a.pill-waze:active, a.pill-gmap:active { opacity: 0.75; }
-
+/* RESA */
 .resa-list { display: flex; flex-direction: column; gap: 0.6rem; }
-
-.resa-card {
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 0.9rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-
+.resa-card { background: var(--surface); border-radius: 12px; padding: 0.9rem 1rem; display: flex; align-items: center; gap: 0.85rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
 .resa-icon { font-size: 1.5rem; flex-shrink: 0; }
 .resa-info { flex: 1; min-width: 0; }
 .resa-name { font-size: 0.88rem; font-weight: 600; color: var(--texte); }
 .resa-sub  { font-size: 0.74rem; color: var(--gris); margin-top: 0.1rem; }
 
-.recap-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-  margin-top: 0.75rem;
-}
-
-.recap-card {
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 0.85rem 0.9rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-
+/* RECAP */
+.recap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.75rem; }
+.recap-card { background: var(--surface); border-radius: 12px; padding: 0.85rem 0.9rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
 .recap-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gris); margin-bottom: 0.25rem; }
 .recap-val   { font-size: 0.88rem; font-weight: 600; color: var(--texte); line-height: 1.2; }
 .recap-sub   { font-size: 0.7rem; color: var(--gris); margin-top: 0.1rem; }
 
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: var(--nav-h);
-  background: var(--surface);
-  border-top: 1px solid rgba(0,0,0,0.07);
-  display: flex;
-  align-items: center;
-  padding: 0 0.5rem;
-  z-index: 100;
-  gap: 0.25rem;
-  padding-bottom: env(safe-area-inset-bottom, 0);
-}
-
-.nav-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  padding: 0.5rem 0.1rem;
-  border-radius: 12px;
-  transition: background 0.15s;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
+/* BOTTOM NAV */
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: var(--nav-h); background: var(--surface); border-top: 1px solid rgba(0,0,0,0.07); display: flex; align-items: center; padding: 0 0.5rem; z-index: 100; gap: 0.25rem; padding-bottom: env(safe-area-inset-bottom, 0); }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2rem; cursor: pointer; border: none; background: transparent; padding: 0.5rem 0.1rem; border-radius: 12px; transition: background 0.15s; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .nav-btn:active { background: var(--gris-light); }
-
-.nav-day {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.1rem;
-  line-height: 1;
-  color: var(--gris);
-  transition: color 0.15s;
-}
-
-.nav-label {
-  font-size: 0.55rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--gris);
-  transition: color 0.15s;
-}
-
+.nav-day   { font-family: 'DM Serif Display', serif; font-size: 1.1rem; line-height: 1; color: var(--gris); }
+.nav-label { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gris); }
 .nav-btn.active { background: var(--terra-light); }
-.nav-btn.active .nav-day  { color: var(--terra); }
-.nav-btn.active .nav-label { color: var(--terra); }
+.nav-btn.active .nav-day, .nav-btn.active .nav-label { color: var(--terra); }
 
-@media (max-width: 400px) {
-  .event-card { grid-template-columns: 44px 1fr; }
-  .event-time { font-size: 0.58rem; }
-}
+/* LANG HIDDEN */
+[data-lang] { display: none; }
+.lang-fr [data-lang="fr"], .lang-lv [data-lang="lv"] { display: contents; }
+span[data-lang], div[data-lang] { display: none; }
+.lang-fr span[data-lang="fr"], .lang-lv span[data-lang="lv"] { display: inline; }
+.lang-fr div[data-lang="fr"], .lang-lv div[data-lang="lv"] { display: block; }
+
+@media (max-width: 400px) { .event-card { grid-template-columns: 44px 1fr; } .event-time { font-size: 0.58rem; } }
 </style>
 </head>
-<body>
+<body class="lang-fr">
 
 <header class="app-header">
   <div class="header-meta">Saint-Cloud · Juin 2026</div>
-  <div class="header-title">Paris <em>avec Arturs</em></div>
+  <div class="header-row">
+    <div class="header-title">Paris <em>avec Arturs</em></div>
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('fr',this)">FR</button>
+      <button class="lang-btn" onclick="setLang('lv',this)">LV</button>
+    </div>
+  </div>
 </header>
 
 <div class="app-scroll" id="scroll">
 
-  <!-- SAM 20 -->
-  <div class="panel active" id="p0">
-    <div class="day-hero">
-      <div class="day-hero-date">Samedi 20 juin · Jour 1</div>
-      <div class="day-hero-title">Arrivée ✈️</div>
-      <div class="day-hero-desc">Vol tardif. On se pose, la semaine commence demain.</div>
+<!-- ═══ SAM 20 ═══ -->
+<div class="panel active" id="p0">
+  <div class="day-hero">
+    <div class="day-hero-date">
+      <span data-lang="fr">Samedi 20 juin · Jour 1</span>
+      <span data-lang="lv">Sestdiena, 20. jūnijs · 1. diena</span>
     </div>
-    <div class="sec-title">Programme</div>
-    <div class="event-list">
-      <div class="event-card is-go">
-        <div class="event-time">18h30</div>
-        <div>
-          <div class="event-name">🔑 Récupérer les clés Airbnb</div>
-          <div class="event-detail">35 rue de Buzenval, Saint-Cloud.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?q=35+rue+de+Buzenval+Saint-Cloud&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
+    <div class="day-hero-title">
+      <span data-lang="fr">Arrivée ✈️</span>
+      <span data-lang="lv">Ierašanās ✈️</span>
+    </div>
+    <div class="day-hero-desc">
+      <span data-lang="fr">Vol tardif. On se pose, la semaine commence demain.</span>
+      <span data-lang="lv">Vēls lidojums. Apmetamies, nedēļa sākas rīt.</span>
+    </div>
+  </div>
+  <div class="sec-title"><span data-lang="fr">Programme</span><span data-lang="lv">Programma</span></div>
+  <div class="event-list">
+    <div class="event-card is-key">
+      <div class="event-time">18h30</div>
+      <div>
+        <div class="event-name">🔑 <span data-lang="fr">Récupérer les clés Airbnb</span><span data-lang="lv">Airbnb atslēgu paņemšana</span></div>
+        <div class="event-detail">35 rue de Buzenval, Saint-Cloud.</div>
       </div>
-      <div class="event-card is-go">
-        <div class="event-time">22h45</div>
-        <div>
-          <div class="event-name">Arrivée à CDG</div>
-          <div class="event-detail">Bagages, puis route vers Saint-Cloud (~45 min).</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=48.84864,2.21237&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">Nuit</div>
-        <div>
-          <div class="event-name">Installation à Saint-Cloud</div>
-          <div class="event-detail">Décalage horaire. La vraie semaine commence demain.</div>
-        </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=48.84864,2.21237&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">Nuit</div>
+      <div>
+        <div class="event-name"><span data-lang="fr">Installation à Saint-Cloud</span><span data-lang="lv">Iekārtošanās Saint-Cloud</span></div>
+        <div class="event-detail"><span data-lang="fr">Décalage horaire. La vraie semaine commence demain.</span><span data-lang="lv">Laika zona. Īstā nedēļa sākas rīt.</span></div>
       </div>
     </div>
   </div>
-
-  <!-- DIM 21 -->
-  <div class="panel" id="p1">
-    <div class="day-hero">
-      <div class="day-hero-date">Dimanche 21 juin · Jour 2</div>
-      <div class="day-hero-title">Fête de la Musique 🎵</div>
-      <div class="day-hero-desc">Ton ami seul le matin, tu rentres de Beauvais vers 17h. Ce soir : concerts gratuits dans tout Paris.</div>
-    </div>
-    <div class="alert">
-      <strong>21 juin = Fête de la Musique !</strong> Concerts gratuits partout — rues, jardins, cours. Tous styles jusqu'à minuit. Programme sur fetedelamusique.culture.gouv.fr fin mai 2026.
-    </div>
-    <div class="sec-title">Programme</div>
-    <div class="event-list">
-
-      <div class="event-card is-go">
-        <div class="event-time">17h-18h</div>
-        <div>
-          <div class="event-name">🏠 Airbnb — Saint-Cloud</div>
-          <div class="event-detail">29 rue Gounod, Saint-Cloud. Retrouvailles avec Arturs.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?q=29+rue+Gounod+Saint-Cloud&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-go">
-        <div class="event-time">Matin</div>
-        <div>
-          <div class="event-name">🚗 Airbnb → Aéroport de Beauvais</div>
-          <div class="event-detail">Route depuis Saint-Cloud jusqu'à Beauvais Tillé (~1h15).</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?q=Aéroport+Beauvais+Tillé&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">Soir</div>
-        <div>
-          <div class="event-name">Fête de la Musique 🎶</div>
-          <div class="event-detail">Place de la République, Canal Saint-Martin, Palais Royal, Bastille...</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Place+de+la+République+Paris&travelmode=transit" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-resto">
-        <div class="event-time">20h00</div>
-        <div>
-          <div class="event-name">Le 404 — Dîner</div>
-          <div class="event-detail">69 rue des Gravilliers, 75003 Paris. Couscous marocain dans le Marais.</div>
-          <div class="pills">
-            <span class="pill pill-ok">✓ Réservé 20h00</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=69+rue+des+Gravilliers+Paris+75003&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LUN 22 -->
-  <div class="panel" id="p2">
-    <div class="day-hero">
-      <div class="day-hero-date">Lundi 22 juin · Jour 3</div>
-      <div class="day-hero-title">Astérix · Senlis · Chantilly · Vol ✈️</div>
-      <div class="day-hero-desc">Journée épique — parc d'attractions, cité médiévale, château et vol au crépuscule.</div>
-    </div>
-    <div class="alert"><strong>1er jour de vacances scolaires.</strong> Astérix sera chargé — arriver à l'ouverture absolument.</div>
-    <div class="sec-title">Programme</div>
-    <div class="event-list">
-      <div class="event-card is-go">
-        <div class="event-time">Matin</div>
-        <div>
-          <div class="event-name">🚗 Saint-Cloud → Parc Astérix</div>
-          <div class="event-detail">Environ 45 min depuis Saint-Cloud.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=49.13385,2.57405&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">Ouv.</div>
-        <div>
-          <div class="event-name">🎡 Parc Astérix</div>
-          <div class="event-detail">Journée complète. Arriver à l'ouverture pour les meilleures attractions.</div>
-          <div class="pills"><span class="pill pill-ok">✓ Réservé</span></div>
-        </div>
-      </div>
-      <div class="event-card is-go">
-        <div class="event-time">18h00</div>
-        <div>
-          <div class="event-name">🚗 Astérix → Senlis</div>
-          <div class="event-detail">10 minutes depuis le parc.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=49.20605,2.58594&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">18h15</div>
-        <div>
-          <div class="event-name">🏰 Senlis — Cité médiévale</div>
-          <div class="event-detail">Ruelles médiévales, cathédrale gothique, remparts gallo-romains. 30-40 min à pied.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Cathédrale+Notre-Dame+de+Senlis&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">18h30</div>
-        <div>
-          <div class="event-name">🔑 Récupérer les clés Airbnb</div>
-          <div class="event-detail">35 rue de Buzenval, Saint-Cloud.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?q=35+rue+de+Buzenval+Saint-Cloud&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-go">
-        <div class="event-time">19h00</div>
-        <div>
-          <div class="event-name">🚗 Senlis → Chantilly</div>
-          <div class="event-detail">15 minutes.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=49.19378,2.48497&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">19h15</div>
-        <div>
-          <div class="event-name">🏯 Château de Chantilly</div>
-          <div class="event-detail">Extérieurs, douves, jardins. Vue sur le château depuis le plan d'eau.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Château+de+Chantilly&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-go">
-        <div class="event-time">19h45</div>
-        <div>
-          <div class="event-name">🚗 Chantilly → Beauvais</div>
-          <div class="event-detail">30 min environ.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=49.43293,2.08027&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">20h30</div>
-        <div>
-          <div class="event-name">✈️ Vol coucher de soleil — Baie de Somme</div>
-          <div class="event-detail">Depuis Beauvais. Lumière dorée sur les paysages côtiers depuis les airs.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MAR 23 -->
-  <div class="panel" id="p3">
-    <div class="day-hero">
-      <div class="day-hero-date">Mardi 23 juin · Jour 4</div>
-      <div class="day-hero-title">Île de la Cité · Marais · Croisière 🛥️</div>
-      <div class="day-hero-desc">Du marché au petit matin à la croisière sous les étoiles. La journée la plus dense de la semaine.</div>
-    </div>
-    <div class="sec-title">Programme</div>
-    <div class="event-list">
-      <div class="event-card is-go">
-        <div class="event-time">Matin</div>
-        <div>
-          <div class="event-name">🚗 Saint-Cloud → Aligre</div>
-          <div class="event-detail">En voiture ou métro selon l'heure.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=48.85063,2.37302&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">7h30</div>
-        <div>
-          <div class="event-name">🛒 Marché d'Aligre (12e)</div>
-          <div class="event-detail">Le plus authentique de Paris. Marché + brocante. Ambiance populaire et cosmopolite.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Marché+d'Aligre+Paris+12&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">9h30</div>
-        <div>
-          <div class="event-name">⛪ Notre-Dame de Paris</div>
-          <div class="event-detail">Fraîchement restaurée. Lumière du matin dans la cathédrale — magnifique.</div>
-          <div class="pills">
-            <span class="pill pill-warn">Réserver en ligne</span>
-            <span class="pill pill-free">Gratuit</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Notre-Dame+de+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">11h00</div>
-        <div>
-          <div class="event-name">📚 BnF Richelieu</div>
-          <div class="event-detail">Grande salle de lecture — architecture spectaculaire. 30 min suffisent.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=BnF+Richelieu+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-resto">
-        <div class="event-time">13h00</div>
-        <div>
-          <div class="event-name">🥞 Breizh Café Marais</div>
-          <div class="event-detail">109 rue Vieille du Temple, 75003. Les meilleures crêpes de Paris.</div>
-          <div class="pills">
-            <span class="pill pill-ok">✓ Réservé 13h00</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=109+rue+Vieille+du+Temple+Paris+75003&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">14h30</div>
-        <div>
-          <div class="event-name">🌿 Jardin des Plantes + Serres</div>
-          <div class="event-detail">57 rue Cuvier, 75005. Serres tropicales spectaculaires.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Jardin+des+Plantes+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">17h00</div>
-        <div>
-          <div class="event-name">🥙 Marché des Enfants Rouges + Marais</div>
-          <div class="event-detail">39 rue de Bretagne, 75003. Le plus vieux marché couvert de Paris (1615).</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Marché+des+Enfants+Rouges+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">19h00</div>
-        <div>
-          <div class="event-name">🌸 Palais Royal + Galerie Vivienne</div>
-          <div class="event-detail">Jardin secret, puis le plus beau passage couvert du XIXe.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Jardin+du+Palais+Royal+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Galerie+Vivienne+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-resto">
-        <div class="event-time">20h00</div>
-        <div>
-          <div class="event-name">🍝 East Mamma (11e)</div>
-          <div class="event-detail">133 rue de la Roquette, 75011. Cuisine italienne généreuse.</div>
-          <div class="pills">
-            <span class="pill pill-ok">✓ Réservé 20h00</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=133+rue+de+la+Roquette+Paris+75011&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">22h15</div>
-        <div>
-          <div class="event-name">🛥️ Croisière Vedettes du Pont Neuf</div>
-          <div class="event-detail">Square du Vert-Galant, 75001. Paris illuminé, Tour Eiffel qui scintille.</div>
-          <div class="pills">
-            <span class="pill pill-ok">✓ Réservé 22h15</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Square+du+Vert-Galant+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MER 24 -->
-  <div class="panel" id="p4">
-    <div class="day-hero">
-      <div class="day-hero-date">Mercredi 24 juin · Jour 5</div>
-      <div class="day-hero-title">Beauval · Chambord 🦁</div>
-      <div class="day-hero-desc">Un des plus beaux zoos d'Europe, puis un des plus grands châteaux du monde. Journée marathon.</div>
-    </div>
-    <div class="alert"><strong>Départ à 7h30 !</strong> 2h15 de route jusqu'à Beauval. Le mercredi = jour le moins fréquenté.</div>
-    <div class="sec-title">Programme</div>
-    <div class="event-list">
-      <div class="event-card is-go">
-        <div class="event-time">7h30</div>
-        <div>
-          <div class="event-name">🚗 Saint-Cloud → Beauval</div>
-          <div class="event-detail">Direction Saint-Aignan-sur-Cher — 2h15 de route.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=47.39506,1.43257&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">10h00</div>
-        <div>
-          <div class="event-name">🦁 Zoo de Beauval</div>
-          <div class="event-detail">Pandas géants, gorilles, lions blancs. Prévoir 5-6h. Ne pas rater les spectacles.</div>
-          <div class="pills">
-            <span class="pill pill-warn">Réserver en ligne</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Zoo+de+Beauval+Saint-Aignan&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-go">
-        <div class="event-time">16h30</div>
-        <div>
-          <div class="event-name">🚗 Beauval → Chambord</div>
-          <div class="event-detail">1h depuis Beauval. Dernière entrée 17h15, fermeture 18h00.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=47.61622,1.51739&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">17h30</div>
-        <div>
-          <div class="event-name">🏰 Château de Chambord</div>
-          <div class="event-detail">Le plus grand château de la Loire. Façade Renaissance hallucinante. Intérieur si à l'heure, façade sinon (gratuit).</div>
-          <div class="pills">
-            <span class="pill pill-opt">Option — réserver au cas où</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Château+de+Chambord&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-go">
-        <div class="event-time">19h00</div>
-        <div>
-          <div class="event-name">🚗 Chambord → Saint-Cloud</div>
-          <div class="event-detail">~2h de route. Arrivée 21h-22h. Dîner sandwich ou livraison.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=48.84864,2.21237&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- JEU 25 -->
-  <div class="panel" id="p5">
-    <div class="day-hero">
-      <div class="day-hero-date">Jeudi 25 juin · Jour 6</div>
-      <div class="day-hero-title">Versailles · Invalides · Eiffel 🌳</div>
-      <div class="day-hero-desc">Jardins royaux à 15 min le matin, puis le grand axe parisien. Soirée au Casimir.</div>
-    </div>
-    <div class="sec-title">Programme</div>
-    <div class="event-list">
-      <div class="event-card is-go">
-        <div class="event-time">Matin</div>
-        <div>
-          <div class="event-name">🚗 Saint-Cloud → Versailles</div>
-          <div class="event-detail">15 minutes en voiture !</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=48.80486,2.12036&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">9h00</div>
-        <div>
-          <div class="event-name">🌳 Jardins de Versailles</div>
-          <div class="event-detail">Jardins à la française, Grands Canaux, Trianons. Bonnes chaussures obligatoires.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Jardins+de+Versailles&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-resto">
-        <div class="event-time">13h00</div>
-        <div>
-          <div class="event-name">🍽️ La Table d'Alice — Versailles</div>
-          <div class="event-detail">Place Saint-Symphorien, Versailles. Bistrot local, cuisine française.</div>
-          <div class="pills">
-            <span class="pill pill-opt">Option — sans réservation</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=La+Table+d'Alice+Versailles&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-go">
-        <div class="event-time">14h30</div>
-        <div>
-          <div class="event-name">🚗 Versailles → Paris (7e)</div>
-          <div class="event-detail">Direction Le Bon Marché / Invalides.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=48.85082,2.32247&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">15h00</div>
-        <div>
-          <div class="event-name">🛍️ Le Bon Marché + Grande Épicerie</div>
-          <div class="event-detail">24 rue de Sèvres, 75007. L'épicerie fine en face est hallucinante.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=24+rue+de+Sèvres+Paris+75007&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">16h00</div>
-        <div>
-          <div class="event-name">⚔️ Les Invalides</div>
-          <div class="event-detail">Esplanade des Invalides, 75007. Dôme doré de Napoléon.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Les+Invalides+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">17h00</div>
-        <div>
-          <div class="event-name">🏛️ Concorde · Grand Palais · Élysée</div>
-          <div class="event-detail">L'obélisque, la verrière du Grand Palais, la résidence du Président.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Place+de+la+Concorde+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Grand+Palais+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">18h00</div>
-        <div>
-          <div class="event-name">🗼 Trocadéro + Tour Eiffel</div>
-          <div class="event-detail">La plus belle vue frontale sur la Tour Eiffel depuis le parvis.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Trocadéro+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-resto">
-        <div class="event-time">19h30</div>
-        <div>
-          <div class="event-name">🍷 Casimir — Meilleur Bistrot 2026</div>
-          <div class="event-detail">6 rue de Belzunce, 75010. Guide Pudlo 2026. Cuisine du marché.</div>
-          <div class="pills">
-            <span class="pill pill-ok">✓ Réservé 19h30</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=6+rue+de+Belzunce+Paris+75010&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">22h00</div>
-        <div>
-          <div class="event-name">🗼 Tour Eiffel au crépuscule</div>
-          <div class="event-detail">Sommet au coucher du soleil (~22h15 en juin). Réserver si vous confirmez.</div>
-          <div class="pills">
-            <span class="pill pill-opt">Option — à confirmer</span>
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Tour+Eiffel+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- VEN 26 -->
-  <div class="panel" id="p6">
-    <div class="day-hero">
-      <div class="day-hero-date">Vendredi 26 juin · Jour 7</div>
-      <div class="day-hero-title">Montmartre · Au revoir 🎨</div>
-      <div class="day-hero-desc">La dernière matinée. Montmartre tôt, café en terrasse. CDG à 17h. Toi → Gare de Lyon 18h45.</div>
-    </div>
-    <div class="alert is-info"><strong>Logistique :</strong> Quitter Paris à <strong>15h45</strong> (1h15 trafic). Déposer à CDG à 17h00. Vol 17h15. Toi → Gare de Lyon 18h45 (quitter CDG à 17h45).</div>
-    <div class="sec-title">Programme</div>
-    <div class="event-list">
-      <div class="event-card is-go">
-        <div class="event-time">Matin</div>
-        <div>
-          <div class="event-name">🚗 Saint-Cloud → Montmartre</div>
-          <div class="event-detail">En voiture ou métro. Se garer dans le bas de Montmartre.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=48.88670,2.34310&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">Tôt</div>
-        <div>
-          <div class="event-name">⛪ Montmartre — Sacré-Cœur</div>
-          <div class="event-detail">Arriver avant les touristes. Vue panoramique sur Paris. Ruelles d'artistes.</div>
-          <div class="pills">
-            <a class="pill pill-gmap" href="https://maps.google.com/?daddr=Sacré-Cœur+Montmartre+Paris&travelmode=walking" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-time">10h00</div>
-        <div>
-          <div class="event-name">☕ Café en terrasse</div>
-          <div class="event-detail">Commande au zinc, croissant, café. L'expérience parisienne par excellence.</div>
-        </div>
-      </div>
-      <div class="event-card is-resto">
-        <div class="event-time">12h00</div>
-        <div>
-          <div class="event-name">🍽️ Déjeuner de clôture</div>
-          <div class="event-detail">Secteur Montmartre/Pigalle. À choisir selon l'envie.</div>
-          <div class="pills"><span class="pill pill-opt">À définir</span></div>
-        </div>
-      </div>
-      <div class="event-card is-go">
-        <div class="event-time">15h45</div>
-        <div>
-          <div class="event-name">🚗 Paris → CDG</div>
-          <div class="event-detail">1h15 de trafic. Déposer à 17h00 pour le vol de 17h15.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?q=CDG+Terminal+2D&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-      <div class="event-card is-key">
-        <div class="event-time">17h15</div>
-        <div>
-          <div class="event-name">✈️ Vol — CDG</div>
-          <div class="event-detail">Retour en Lettonie. Au revoir Paris !</div>
-        </div>
-      </div>
-      <div class="event-card is-go">
-        <div class="event-time">17h45</div>
-        <div>
-          <div class="event-name">🚗 CDG → Gare de Lyon</div>
-          <div class="event-detail">~45 min. Train à 18h45.</div>
-          <div class="pills">
-            <a class="pill pill-waze" href="https://waze.com/ul?ll=48.84472,2.37397&navigate=yes" target="_blank">Itinéraire</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RÉSAS -->
-  <div class="panel" id="p7">
-    <div class="day-hero">
-      <div class="day-hero-date">Checklist complète</div>
-      <div class="day-hero-title">Réservations ★</div>
-      <div class="day-hero-desc">Tout ce qui est confirmé, à faire, ou à surveiller.</div>
-    </div>
-
-    <div class="sec-title">✅ Confirmé</div>
-    <div class="resa-list">
-      <div class="resa-card"><div class="resa-icon">🎡</div><div class="resa-info"><div class="resa-name">Parc Astérix</div><div class="resa-sub">Lundi 22 juin</div></div><span class="pill pill-ok">✓</span></div>
-      <div class="resa-card"><div class="resa-icon">🛥️</div><div class="resa-info"><div class="resa-name">Croisière Vedettes du Pont Neuf</div><div class="resa-sub">Mardi 23 à 22h15</div></div><span class="pill pill-ok">✓</span></div>
-      <div class="resa-card"><div class="resa-icon">🇲🇦</div><div class="resa-info"><div class="resa-name">Le 404 — Couscous marocain</div><div class="resa-sub">Dimanche 21 à 20h00 · Le Marais</div></div><span class="pill pill-ok">✓</span></div>
-      <div class="resa-card"><div class="resa-icon">🥞</div><div class="resa-info"><div class="resa-name">Breizh Café Marais</div><div class="resa-sub">Mardi 23 à 13h00</div></div><span class="pill pill-ok">✓</span></div>
-      <div class="resa-card"><div class="resa-icon">🍝</div><div class="resa-info"><div class="resa-name">East Mamma</div><div class="resa-sub">Mardi 23 à 20h00 · 11e</div></div><span class="pill pill-ok">✓</span></div>
-      <div class="resa-card"><div class="resa-icon">🍷</div><div class="resa-info"><div class="resa-name">Casimir — Meilleur Bistrot 2026</div><div class="resa-sub">Jeudi 25 à 19h30 · 10e</div></div><span class="pill pill-ok">✓</span></div>
-    </div>
-
-    <div class="sec-title">📌 À réserver maintenant</div>
-    <div class="resa-list">
-      <div class="resa-card"><div class="resa-icon">⛪</div><div class="resa-info"><div class="resa-name">Notre-Dame de Paris</div><div class="resa-sub">Mardi 23 · Gratuit mais obligatoire</div></div><span class="pill pill-warn">Urgent</span></div>
-      <div class="resa-card"><div class="resa-icon">🦁</div><div class="resa-info"><div class="resa-name">Zoo de Beauval</div><div class="resa-sub">Mercredi 24</div></div><span class="pill pill-warn">À faire</span></div>
-      <div class="resa-card"><div class="resa-icon">🏰</div><div class="resa-info"><div class="resa-name">Château de Chambord</div><div class="resa-sub">Mercredi 24 · En option</div></div><span class="pill pill-opt">Option</span></div>
-    </div>
-
-    <div class="sec-title">⭐ Options à confirmer</div>
-    <div class="resa-list">
-      <div class="resa-card"><div class="resa-icon">🗼</div><div class="resa-info"><div class="resa-name">Tour Eiffel au crépuscule</div><div class="resa-sub">Jeudi 25 après Casimir · ~22h00</div></div><span class="pill pill-opt">À confirmer</span></div>
-      <div class="resa-card"><div class="resa-icon">🍽️</div><div class="resa-info"><div class="resa-name">La Table d'Alice — Versailles</div><div class="resa-sub">Jeudi 25 midi · Sans réservation</div></div><span class="pill pill-opt">Option</span></div>
-      <div class="resa-card"><div class="resa-icon">🎨</div><div class="resa-info"><div class="resa-name">Déjeuner vendredi midi</div><div class="resa-sub">Repas de clôture · À définir</div></div><span class="pill pill-opt">À définir</span></div>
-    </div>
-
-    <div class="sec-title">📅 Infos pratiques</div>
-    <div class="recap-grid">
-      <div class="recap-card"><div class="recap-label">Logement</div><div class="recap-val">Saint-Cloud</div></div>
-      <div class="recap-card"><div class="recap-label">Arrivée</div><div class="recap-val">Sam 20 juin</div><div class="recap-sub">22h45 · CDG</div></div>
-      <div class="recap-card"><div class="recap-label">Départ ami</div><div class="recap-val">Ven 26 juin</div><div class="recap-sub">17h15 · CDG</div></div>
-      <div class="recap-card"><div class="recap-label">Ton train</div><div class="recap-val">Ven 26 juin</div><div class="recap-sub">18h45 · Gare de Lyon</div></div>
-      <div class="recap-card"><div class="recap-label">Transport</div><div class="recap-val">Voiture + métro</div></div>
-      <div class="recap-card"><div class="recap-label">Fête Musique</div><div class="recap-val">21 juin</div><div class="recap-sub">fetedelamusique.culture.gouv.fr</div></div>
-    </div>
-  </div>
-
 </div>
+
+<!-- ═══ DIM 21 ═══ -->
+<div class="panel" id="p1">
+  <div class="day-hero">
+    <div class="day-hero-date"><span data-lang="fr">Dimanche 21 juin · Jour 2</span><span data-lang="lv">Svētdiena, 21. jūnijs · 2. diena</span></div>
+    <div class="day-hero-title"><span data-lang="fr">Fête de la Musique 🎵</span><span data-lang="lv">Mūzikas svētki 🎵</span></div>
+    <div class="day-hero-desc"><span data-lang="fr">Tu travailles à Beauvais, retour vers 17h-18h. Ce soir : Fête de la Musique dans tout Paris !</span><span data-lang="lv">Tu strādā Beauvais, atgriežies ap 17-18h. Vakarā: Mūzikas svētki visā Parīzē!</span></div>
+  </div>
+  <div class="alert">
+    <div data-lang="fr"><strong>21 juin = Fête de la Musique !</strong> Concerts gratuits partout — rues, jardins, cours. Tous styles jusqu'à minuit. Programme sur fetedelamusique.culture.gouv.fr fin mai 2026.</div>
+    <div data-lang="lv"><strong>21. jūnijs = Mūzikas svētki!</strong> Bezmaksas koncerti visur — ielās, dārzos, pagalmos. Visi stili līdz pusnaktij. Programma: fetedelamusique.culture.gouv.fr</div>
+  </div>
+  <div class="sec-title"><span data-lang="fr">Programme</span><span data-lang="lv">Programma</span></div>
+  <div class="event-list">
+    <div class="event-card">
+      <div class="event-time"><span data-lang="fr">Matin</span><span data-lang="lv">Rīts</span></div>
+      <div>
+        <div class="event-name">🏠 <span data-lang="fr">Airbnb — Saint-Cloud</span><span data-lang="lv">Airbnb — Saint-Cloud</span></div>
+        <div class="event-detail">29 rue Gounod, Saint-Cloud.</div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?q=Aéroport+Beauvais+Tillé&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-go">
+      <div class="event-time"><span data-lang="fr">Matin</span><span data-lang="lv">Rīts</span></div>
+      <div>
+        <div class="event-name">✈️ <span data-lang="fr">Aéroport de Beauvais — Travail</span><span data-lang="lv">Beauvais lidosta — Darbs</span></div>
+        <div class="event-detail"><span data-lang="fr">Route depuis Saint-Cloud (~1h15). Tu travailles jusqu'à 17h.</span><span data-lang="lv">Ceļš no Saint-Cloud (~1h15). Darbs līdz 17h.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?q=29+rue+Gounod+Saint-Cloud&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">17h-18h</div>
+      <div>
+        <div class="event-name">🏠 <span data-lang="fr">Retour Airbnb — Saint-Cloud</span><span data-lang="lv">Atgriešanās Airbnb — Saint-Cloud</span></div>
+        <div class="event-detail"><span data-lang="fr">Retrouvailles avec Arturs.</span><span data-lang="lv">Tikšanās ar Arturu.</span></div>
+      </div>
+    </div>
+    <div class="event-card is-key">
+      <div class="event-time"><span data-lang="fr">Soir</span><span data-lang="lv">Vakars</span></div>
+      <div>
+        <div class="event-name">🎶 <span data-lang="fr">Fête de la Musique</span><span data-lang="lv">Mūzikas svētki</span></div>
+        <div class="event-detail"><span data-lang="fr">Place de la République, Canal Saint-Martin, Palais Royal, Bastille...</span><span data-lang="lv">Place de la République, Canal Saint-Martin, Palais Royal, Bastille...</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=69+rue+des+Gravilliers+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-resto">
+      <div class="event-time">20h00</div>
+      <div>
+        <div class="event-name">Le 404 — <span data-lang="fr">Dîner</span><span data-lang="lv">Vakariņas</span></div>
+        <div class="event-detail"><span data-lang="fr">69 rue des Gravilliers, 75003. Couscous marocain dans le Marais.</span><span data-lang="lv">69 rue des Gravilliers, 75003. Marokas kuskuss Marē rajonā.</span></div>
+        <div class="pills"><span class="pill pill-ok">✓ <span data-lang="fr">Réservé 20h00</span><span data-lang="lv">Rezervēts 20:00</span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LUN 22 ═══ -->
+<div class="panel" id="p2">
+  <div class="day-hero">
+    <div class="day-hero-date"><span data-lang="fr">Lundi 22 juin · Jour 3</span><span data-lang="lv">Pirmdiena, 22. jūnijs · 3. diena</span></div>
+    <div class="day-hero-title">Astérix · Senlis · Chantilly · Vol ✈️</div>
+    <div class="day-hero-desc"><span data-lang="fr">Journée épique — parc d'attractions, cité médiévale, château et vol au crépuscule.</span><span data-lang="lv">Episka diena — atrakciju parks, viduslaiku pilsēta, pils un lidojums krēslā.</span></div>
+  </div>
+  <div class="alert">
+    <div data-lang="fr"><strong>1er jour de vacances scolaires.</strong> Astérix sera chargé — arriver à l'ouverture absolument.</div>
+    <div data-lang="lv"><strong>Pirma skolas brīvdienu diena.</strong> Astérix būs pārpildīts — jāierodas tieši atklāšanas brīdī.</div>
+  </div>
+  <div class="sec-title"><span data-lang="fr">Programme</span><span data-lang="lv">Programma</span></div>
+  <div class="event-list">
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=49.13385,2.57405&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-key">
+      <div class="event-time"><span data-lang="fr">Ouv.</span><span data-lang="lv">Atvēr.</span></div>
+      <div>
+        <div class="event-name">🎡 Parc Astérix</div>
+        <div class="event-detail"><span data-lang="fr">Journée complète. Arriver à l'ouverture pour les meilleures attractions.</span><span data-lang="lv">Pilna diena. Jāierodas atklāšanas brīdī, lai izbaudītu labākās atrakcijas.</span></div>
+        <div class="pills"><span class="pill pill-ok">✓ <span data-lang="fr">Réservé</span><span data-lang="lv">Rezervēts</span></span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=49.20605,2.58594&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">18h15</div>
+      <div>
+        <div class="event-name">🏰 Senlis — <span data-lang="fr">Cité médiévale</span><span data-lang="lv">Viduslaiku pilsēta</span></div>
+        <div class="event-detail"><span data-lang="fr">Ruelles médiévales, cathédrale gothique, remparts gallo-romains. 30-40 min à pied.</span><span data-lang="lv">Viduslaiku ieliņas, gotiskā katedrāle, gallu-romiešu sienas. 30-40 min kājām.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=49.19378,2.48497&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">19h15</div>
+      <div>
+        <div class="event-name">🏯 <span data-lang="fr">Château de Chantilly</span><span data-lang="lv">Šantiji pils</span></div>
+        <div class="event-detail"><span data-lang="fr">Extérieurs, douves, jardins. Vue sur le château depuis le plan d'eau.</span><span data-lang="lv">Ārpuse, grāvji, dārzi. Skats uz pili no ūdens.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=49.43293,2.08027&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-key">
+      <div class="event-time">20h30</div>
+      <div>
+        <div class="event-name">✈️ <span data-lang="fr">Vol coucher de soleil — Baie de Somme</span><span data-lang="lv">Lidojums saulrietā — Sommas līcis</span></div>
+        <div class="event-detail"><span data-lang="fr">Depuis Beauvais. Lumière dorée sur les paysages côtiers depuis les airs.</span><span data-lang="lv">No Beauvais. Zelta gaisma pār piekrastes ainavu no gaisa.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MAR 23 ═══ -->
+<div class="panel" id="p3">
+  <div class="day-hero">
+    <div class="day-hero-date"><span data-lang="fr">Mardi 23 juin · Jour 4</span><span data-lang="lv">Otrdiena, 23. jūnijs · 4. diena</span></div>
+    <div class="day-hero-title"><span data-lang="fr">Île de la Cité · Marais · Croisière 🛥️</span><span data-lang="lv">Île de la Cité · Marē · Kruīzs 🛥️</span></div>
+    <div class="day-hero-desc"><span data-lang="fr">Du marché au petit matin à la croisière sous les étoiles. La journée la plus dense de la semaine.</span><span data-lang="lv">No rīta tirgus līdz kruīzam zvaigžņu gaismā. Visblīvākā nedēļas diena.</span></div>
+  </div>
+  <div class="sec-title"><span data-lang="fr">Programme</span><span data-lang="lv">Programma</span></div>
+  <div class="event-list">
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=48.85063,2.37302&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">7h30</div>
+      <div>
+        <div class="event-name">🛒 <span data-lang="fr">Marché d'Aligre (12e)</span><span data-lang="lv">Aligre tirgus (12e)</span></div>
+        <div class="event-detail"><span data-lang="fr">Le plus authentique de Paris. Marché + brocante. Ambiance populaire et cosmopolite.</span><span data-lang="lv">Autentiskākais tirgus Parīzē. Tirgus + veclietas. Kosmopolītiska atmosfēra.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Notre-Dame+de+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-key">
+      <div class="event-time">9h30</div>
+      <div>
+        <div class="event-name">⛪ Notre-Dame de Paris</div>
+        <div class="event-detail"><span data-lang="fr">Fraîchement restaurée. Lumière du matin dans la cathédrale — magnifique.</span><span data-lang="lv">Tikko atjaunota. Rīta gaisma katedrālē — brīnišķīgi.</span></div>
+        <div class="pills">
+          <span class="pill pill-warn"><span data-lang="fr">Réserver en ligne</span><span data-lang="lv">Rezervēt tiešsaistē</span></span>
+          <span class="pill pill-free"><span data-lang="fr">Gratuit</span><span data-lang="lv">Bezmaksas</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=BnF+Richelieu+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">11h00</div>
+      <div>
+        <div class="event-name">📚 BnF Richelieu</div>
+        <div class="event-detail"><span data-lang="fr">Grande salle de lecture — architecture spectaculaire. 30 min suffisent.</span><span data-lang="lv">Lielā lasītava — iespaidīga arhitektūra. 30 min pietiek.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=109+rue+Vieille+du+Temple+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-resto">
+      <div class="event-time">13h00</div>
+      <div>
+        <div class="event-name">🥞 Breizh Café Marais</div>
+        <div class="event-detail"><span data-lang="fr">109 rue Vieille du Temple, 75003. Les meilleures crêpes de Paris.</span><span data-lang="lv">109 rue Vieille du Temple, 75003. Labākās krēpes Parīzē.</span></div>
+        <div class="pills"><span class="pill pill-ok">✓ <span data-lang="fr">Réservé 13h00</span><span data-lang="lv">Rezervēts 13:00</span></span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Jardin+des+Plantes+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">14h30</div>
+      <div>
+        <div class="event-name">🌿 <span data-lang="fr">Jardin des Plantes + Serres</span><span data-lang="lv">Botāniskais dārzs + Siltumnīcas</span></div>
+        <div class="event-detail"><span data-lang="fr">57 rue Cuvier, 75005. Serres tropicales spectaculaires.</span><span data-lang="lv">57 rue Cuvier, 75005. Iespaidīgas tropu siltumnīcas.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Marché+des+Enfants+Rouges+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">17h00</div>
+      <div>
+        <div class="event-name">🥙 <span data-lang="fr">Marché des Enfants Rouges + Marais</span><span data-lang="lv">Enfants Rouges tirgus + Marē rajons</span></div>
+        <div class="event-detail"><span data-lang="fr">39 rue de Bretagne, 75003. Le plus vieux marché couvert de Paris (1615).</span><span data-lang="lv">39 rue de Bretagne, 75003. Vecākais slēgtais tirgus Parīzē (1615).</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Jardin+du+Palais+Royal+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">19h00</div>
+      <div>
+        <div class="event-name">🌸 <span data-lang="fr">Palais Royal + Galerie Vivienne</span><span data-lang="lv">Palais Royal + Galerie Vivienne</span></div>
+        <div class="event-detail"><span data-lang="fr">Jardin secret, puis le plus beau passage couvert du XIXe.</span><span data-lang="lv">Slepens dārzs, tad skaistākā XIX gs. jumtstatā eja.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=133+rue+de+la+Roquette+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-resto">
+      <div class="event-time">20h00</div>
+      <div>
+        <div class="event-name">🍝 East Mamma (11e)</div>
+        <div class="event-detail"><span data-lang="fr">133 rue de la Roquette, 75011. Cuisine italienne généreuse.</span><span data-lang="lv">133 rue de la Roquette, 75011. Dāsna itāļu virtuve.</span></div>
+        <div class="pills"><span class="pill pill-ok">✓ <span data-lang="fr">Réservé 20h00</span><span data-lang="lv">Rezervēts 20:00</span></span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Square+du+Vert-Galant+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-key">
+      <div class="event-time">22h15</div>
+      <div>
+        <div class="event-name">🛥️ <span data-lang="fr">Croisière Vedettes du Pont Neuf</span><span data-lang="lv">Kruīzs Vedettes du Pont Neuf</span></div>
+        <div class="event-detail"><span data-lang="fr">Square du Vert-Galant, 75001. Paris illuminé, Tour Eiffel qui scintille.</span><span data-lang="lv">Square du Vert-Galant, 75001. Apgaismota Parīze, mirdzošs Eifela tornis.</span></div>
+        <div class="pills"><span class="pill pill-ok">✓ <span data-lang="fr">Réservé 22h15</span><span data-lang="lv">Rezervēts 22:15</span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MER 24 ═══ -->
+<div class="panel" id="p4">
+  <div class="day-hero">
+    <div class="day-hero-date"><span data-lang="fr">Mercredi 24 juin · Jour 5</span><span data-lang="lv">Trešdiena, 24. jūnijs · 5. diena</span></div>
+    <div class="day-hero-title">Beauval · Chambord 🦁</div>
+    <div class="day-hero-desc"><span data-lang="fr">Un des plus beaux zoos d'Europe, puis un des plus grands châteaux du monde. Journée marathon.</span><span data-lang="lv">Viens no skaistākajiem zooloģiskajiem dārziem Eiropā, tad viens no lielākajiem pasaules pilskaliem. Maratona diena.</span></div>
+  </div>
+  <div class="alert">
+    <div data-lang="fr"><strong>Départ tôt !</strong> Partir vers 6h30-7h00 pour éviter les bouchons du matin et arriver à l'ouverture de Beauval. 2h15 de route sans trafic, prévoir 3h avec bouchons.</div>
+    <div data-lang="lv"><strong>Agra izbraukšana!</strong> Jāizbrauc ap 6:30-7:00, lai izvairītos no rīta sastrēgumiem un ierastos Beauval atklāšanas brīdī. 2h15 bez satiksmes, ar sastrēgumiem ~3h.</div>
+  </div>
+  <div class="sec-title"><span data-lang="fr">Programme</span><span data-lang="lv">Programma</span></div>
+  <div class="event-list">
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=47.39506,1.43257&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-key">
+      <div class="event-time"><span data-lang="fr">Ouv.</span><span data-lang="lv">Atvēr.</span></div>
+      <div>
+        <div class="event-name">🦁 Zoo de Beauval</div>
+        <div class="event-detail"><span data-lang="fr">Pandas géants, gorilles, lions blancs. Prévoir 5-6h. Ne pas rater les spectacles.</span><span data-lang="lv">Milzu pandas, gorillas, baltie lauvas. Plānot 5-6h. Nepalaidiet garām izrādes.</span></div>
+        <div class="pills"><span class="pill pill-ok">✓ <span data-lang="fr">Réservé</span><span data-lang="lv">Rezervēts</span></span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=47.61622,1.51739&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">17h30</div>
+      <div>
+        <div class="event-name">🏰 <span data-lang="fr">Château de Chambord</span><span data-lang="lv">Šamboras pils</span></div>
+        <div class="event-detail"><span data-lang="fr">Le plus grand château de la Loire. Façade Renaissance hallucinante. Intérieur si à l'heure, façade sinon (gratuit).</span><span data-lang="lv">Lielākā Luāras pils. Apbrīnojama renesanses fasāde. Iekšpuse, ja laikā, citādi fasāde (bezmaksas).</span></div>
+        <div class="pills"><span class="pill pill-opt"><span data-lang="fr">Option — réserver au cas où</span><span data-lang="lv">Iespēja — rezervēt uz gadījumu</span></span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=48.84864,2.21237&navigate=yes" target="_blank">🚗 <span data-lang="fr">Retour Saint-Cloud</span><span data-lang="lv">Atgriešanās Saint-Cloud</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ JEU 25 ═══ -->
+<div class="panel" id="p5">
+  <div class="day-hero">
+    <div class="day-hero-date"><span data-lang="fr">Jeudi 25 juin · Jour 6</span><span data-lang="lv">Ceturtdiena, 25. jūnijs · 6. diena</span></div>
+    <div class="day-hero-title"><span data-lang="fr">Versailles · Invalides · Eiffel 🌳</span><span data-lang="lv">Versaļa · Invalides · Eifelis 🌳</span></div>
+    <div class="day-hero-desc"><span data-lang="fr">Jardins royaux à 15 min le matin, puis le grand axe parisien. Soirée au Casimir.</span><span data-lang="lv">Karaliskais dārzs 15 min attālumā, tad Parīzes lielā ass. Vakars Casimir.</span></div>
+  </div>
+  <div class="sec-title"><span data-lang="fr">Programme</span><span data-lang="lv">Programma</span></div>
+  <div class="event-list">
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=48.80486,2.12036&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-key">
+      <div class="event-time">9h00</div>
+      <div>
+        <div class="event-name">🌳 <span data-lang="fr">Jardins de Versailles</span><span data-lang="lv">Versaļas dārzi</span></div>
+        <div class="event-detail"><span data-lang="fr">Jardins à la française, Grands Canaux, Trianons. Bonnes chaussures obligatoires.</span><span data-lang="lv">Franču dārzi, Lielie kanāli, Trianoni. Ērtas kurpes obligāti.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=La+Table+d'Alice+Versailles&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-resto">
+      <div class="event-time">13h00</div>
+      <div>
+        <div class="event-name">🍽️ La Table d'Alice — Versailles</div>
+        <div class="event-detail"><span data-lang="fr">Place Saint-Symphorien, Versailles. Bistrot local, cuisine française.</span><span data-lang="lv">Place Saint-Symphorien, Versaļa. Vietējais bistro, franču virtuve.</span></div>
+        <div class="pills"><span class="pill pill-opt"><span data-lang="fr">Option — sans réservation</span><span data-lang="lv">Iespēja — bez rezervācijas</span></span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=48.85082,2.32247&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">15h00</div>
+      <div>
+        <div class="event-name">🛍️ <span data-lang="fr">Le Bon Marché + Grande Épicerie</span><span data-lang="lv">Le Bon Marché + Lielā Pārtikas Veikala</span></div>
+        <div class="event-detail"><span data-lang="fr">24 rue de Sèvres, 75007. L'épicerie fine en face est hallucinante.</span><span data-lang="lv">24 rue de Sèvres, 75007. Pārtikas delikatešu veikals pretī ir pārsteidzošs.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Les+Invalides+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">16h00</div>
+      <div>
+        <div class="event-name">⚔️ Les Invalides</div>
+        <div class="event-detail"><span data-lang="fr">Esplanade des Invalides, 75007. Dôme doré de Napoléon.</span><span data-lang="lv">Esplanade des Invalides, 75007. Napoleona zeltītais kupols.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Place+de+la+Concorde+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">17h00</div>
+      <div>
+        <div class="event-name">🏛️ <span data-lang="fr">Concorde · Grand Palais · Élysée</span><span data-lang="lv">Konkordas laukums · Grand Palais · Elizejas pils</span></div>
+        <div class="event-detail"><span data-lang="fr">L'obélisque, la verrière du Grand Palais, la résidence du Président.</span><span data-lang="lv">Obelisks, Grand Palais stikla jumts, Prezidenta rezidence.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Trocadéro+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">18h00</div>
+      <div>
+        <div class="event-name">🗼 <span data-lang="fr">Trocadéro + Tour Eiffel</span><span data-lang="lv">Trokadēro + Eifeļa tornis</span></div>
+        <div class="event-detail"><span data-lang="fr">La plus belle vue frontale sur la Tour Eiffel depuis le parvis.</span><span data-lang="lv">Skaistākais skatpunkts uz Eifeļa torni no priekšpuses.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=6+rue+de+Belzunce+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-resto">
+      <div class="event-time">19h30</div>
+      <div>
+        <div class="event-name">🍷 Casimir — <span data-lang="fr">Meilleur Bistrot 2026</span><span data-lang="lv">Labākais bistro 2026</span></div>
+        <div class="event-detail"><span data-lang="fr">6 rue de Belzunce, 75010. Guide Pudlo 2026. Cuisine du marché.</span><span data-lang="lv">6 rue de Belzunce, 75010. Pudlo ceļvedis 2026. Tirgus virtuve.</span></div>
+        <div class="pills"><span class="pill pill-ok">✓ <span data-lang="fr">Réservé 19h30</span><span data-lang="lv">Rezervēts 19:30</span></span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Tour+Eiffel+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">22h00</div>
+      <div>
+        <div class="event-name">🗼 <span data-lang="fr">Tour Eiffel au crépuscule</span><span data-lang="lv">Eifeļa tornis krēslā</span></div>
+        <div class="event-detail"><span data-lang="fr">Sommet au coucher du soleil (~22h15 en juin). Réserver si vous confirmez.</span><span data-lang="lv">Virsotne saulrietā (~22:15 jūnijā). Rezervēt, ja apstiprina.</span></div>
+        <div class="pills"><span class="pill pill-opt"><span data-lang="fr">Option — à confirmer</span><span data-lang="lv">Iespēja — jāapstiprina</span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VEN 26 ═══ -->
+<div class="panel" id="p6">
+  <div class="day-hero">
+    <div class="day-hero-date"><span data-lang="fr">Vendredi 26 juin · Jour 7</span><span data-lang="lv">Piektdiena, 26. jūnijs · 7. diena</span></div>
+    <div class="day-hero-title"><span data-lang="fr">Montmartre · Au revoir 🎨</span><span data-lang="lv">Monmartra · Ardievu 🎨</span></div>
+    <div class="day-hero-desc"><span data-lang="fr">La dernière matinée. Montmartre tôt, café en terrasse. CDG à 17h. Toi → Gare de Lyon 18h45.</span><span data-lang="lv">Pēdējais rīts. Monmartra agri, kafija terasē. CDG 17h. Tu → Lionas stacija 18:45.</span></div>
+  </div>
+  <div class="alert is-info">
+    <div data-lang="fr"><strong>Logistique :</strong> Quitter Paris à <strong>15h45</strong> (1h15 trafic). Déposer à CDG à 17h00. Vol 17h15. Toi → Gare de Lyon 18h45 (quitter CDG à 17h45).</div>
+    <div data-lang="lv"><strong>Loģistika:</strong> Atstāt Parīzi <strong>15:45</strong> (1h15 satiksme). Nogādāt uz CDG 17:00. Lidojums 17:15. Tu → Lionas stacija 18:45 (atstāt CDG 17:45).</div>
+  </div>
+  <div class="sec-title"><span data-lang="fr">Programme</span><span data-lang="lv">Programma</span></div>
+  <div class="event-list">
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=48.88670,2.34310&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-key">
+      <div class="event-time"><span data-lang="fr">Tôt</span><span data-lang="lv">Agri</span></div>
+      <div>
+        <div class="event-name">⛪ Montmartre — Sacré-Cœur</div>
+        <div class="event-detail"><span data-lang="fr">Arriver avant les touristes. Vue panoramique sur Paris. Ruelles d'artistes.</span><span data-lang="lv">Ierasties pirms tūristiem. Panorāmas skats uz Parīzi. Mākslinieku ieliņas.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Place+du+Tertre+Montmartre+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card">
+      <div class="event-time">10h00</div>
+      <div>
+        <div class="event-name">☕ <span data-lang="fr">Café en terrasse</span><span data-lang="lv">Kafija terasē</span></div>
+        <div class="event-detail"><span data-lang="fr">Commande au zinc, croissant, café. L'expérience parisienne par excellence.</span><span data-lang="lv">Pasūtījums pie bāra letes, kruasāns, kafija. Īstā parīziešu pieredze.</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-gmap" href="https://maps.google.com/?daddr=Place+du+Tertre+Montmartre+Paris&travelmode=walking" target="_blank">🗺 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-resto">
+      <div class="event-time">12h00</div>
+      <div>
+        <div class="event-name">🍽️ <span data-lang="fr">Déjeuner de clôture</span><span data-lang="lv">Noslēguma pusdienas</span></div>
+        <div class="event-detail"><span data-lang="fr">Secteur Montmartre/Pigalle. À choisir selon l'envie.</span><span data-lang="lv">Monmartra/Pigal rajons. Jāizvēlas pēc gaumes.</span></div>
+        <div class="pills"><span class="pill pill-opt"><span data-lang="fr">À définir</span><span data-lang="lv">Jānosaka</span></span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?q=CDG+Terminal+2D&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+    <div class="event-card is-key">
+      <div class="event-time">17h15</div>
+      <div>
+        <div class="event-name">✈️ <span data-lang="fr">Vol — CDG Terminal 2D</span><span data-lang="lv">Lidojums — CDG Terminal 2D</span></div>
+        <div class="event-detail"><span data-lang="fr">Retour en Lettonie. Au revoir Paris !</span><span data-lang="lv">Atgriešanās Latvijā. Uz redzēšanos, Parīze!</span></div>
+      </div>
+    </div>
+    <div class="connector">
+      <a class="c-waze" href="https://waze.com/ul?ll=48.84472,2.37397&navigate=yes" target="_blank">🚗 <span data-lang="fr">Itinéraire</span><span data-lang="lv">Maršruts</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RÉSAS ═══ -->
+<div class="panel" id="p7">
+  <div class="day-hero">
+    <div class="day-hero-date"><span data-lang="fr">Checklist complète</span><span data-lang="lv">Pilns saraksts</span></div>
+    <div class="day-hero-title"><span data-lang="fr">Réservations ★</span><span data-lang="lv">Rezervācijas ★</span></div>
+    <div class="day-hero-desc"><span data-lang="fr">Tout ce qui est confirmé, à faire, ou à surveiller.</span><span data-lang="lv">Viss, kas apstiprināts, jādara vai jāseko.</span></div>
+  </div>
+
+  <div class="sec-title">✅ <span data-lang="fr">Confirmé</span><span data-lang="lv">Apstiprināts</span></div>
+  <div class="resa-list">
+    <div class="resa-card"><div class="resa-icon">🎡</div><div class="resa-info"><div class="resa-name">Parc Astérix</div><div class="resa-sub"><span data-lang="fr">Lundi 22 juin</span><span data-lang="lv">Pirmdiena, 22. jūnijs</span></div></div><span class="pill pill-ok">✓</span></div>
+    <div class="resa-card"><div class="resa-icon">🛥️</div><div class="resa-info"><div class="resa-name"><span data-lang="fr">Croisière Vedettes du Pont Neuf</span><span data-lang="lv">Kruīzs Vedettes du Pont Neuf</span></div><div class="resa-sub"><span data-lang="fr">Mardi 23 à 22h15</span><span data-lang="lv">Otrdiena, 23. — 22:15</span></div></div><span class="pill pill-ok">✓</span></div>
+    <div class="resa-card"><div class="resa-icon">🍲</div><div class="resa-info"><div class="resa-name">Le 404 — <span data-lang="fr">Couscous marocain</span><span data-lang="lv">Marokas kuskuss</span></div><div class="resa-sub"><span data-lang="fr">Dimanche 21 à 20h00 · Le Marais</span><span data-lang="lv">Svētdiena, 21. — 20:00 · Marē</span></div></div><span class="pill pill-ok">✓</span></div>
+    <div class="resa-card"><div class="resa-icon">🥞</div><div class="resa-info"><div class="resa-name">Breizh Café Marais</div><div class="resa-sub"><span data-lang="fr">Mardi 23 à 13h00</span><span data-lang="lv">Otrdiena, 23. — 13:00</span></div></div><span class="pill pill-ok">✓</span></div>
+    <div class="resa-card"><div class="resa-icon">🍝</div><div class="resa-info"><div class="resa-name">East Mamma</div><div class="resa-sub"><span data-lang="fr">Mardi 23 à 20h00 · 11e</span><span data-lang="lv">Otrdiena, 23. — 20:00 · 11e</span></div></div><span class="pill pill-ok">✓</span></div>
+    <div class="resa-card"><div class="resa-icon">🍷</div><div class="resa-info"><div class="resa-name">Casimir — <span data-lang="fr">Meilleur Bistrot 2026</span><span data-lang="lv">Labākais bistro 2026</span></div><div class="resa-sub"><span data-lang="fr">Jeudi 25 à 19h30 · 10e</span><span data-lang="lv">Ceturtdiena, 25. — 19:30 · 10e</span></div></div><span class="pill pill-ok">✓</span></div>
+  </div>
+
+  <div class="sec-title">📌 <span data-lang="fr">À réserver maintenant</span><span data-lang="lv">Jārezervē tagad</span></div>
+  <div class="resa-list">
+    <div class="resa-card"><div class="resa-icon">⛪</div><div class="resa-info"><div class="resa-name">Notre-Dame de Paris</div><div class="resa-sub"><span data-lang="fr">Mardi 23 · Gratuit mais obligatoire</span><span data-lang="lv">Otrdiena, 23. · Bezmaksas, bet obligāti</span></div></div><span class="pill pill-warn"><span data-lang="fr">Urgent</span><span data-lang="lv">Steidzami</span></span></div>
+    <div class="resa-card"><div class="resa-icon">🦁</div><div class="resa-info"><div class="resa-name">Zoo de Beauval</div><div class="resa-sub"><span data-lang="fr">Mercredi 24 · Départ ~6h30</span><span data-lang="lv">Trešdiena, 24. · Izbraukšana ~6:30</span></div></div><span class="pill pill-ok">✓ <span data-lang="fr">Réservé</span><span data-lang="lv">Rezervēts</span></span></div>
+    <div class="resa-card"><div class="resa-icon">🏰</div><div class="resa-info"><div class="resa-name"><span data-lang="fr">Château de Chambord</span><span data-lang="lv">Šamboras pils</span></div><div class="resa-sub"><span data-lang="fr">Mercredi 24 · En option</span><span data-lang="lv">Trešdiena, 24. · Iespēja</span></div></div><span class="pill pill-opt"><span data-lang="fr">Option</span><span data-lang="lv">Iespēja</span></span></div>
+  </div>
+
+  <div class="sec-title">⭐ <span data-lang="fr">Options à confirmer</span><span data-lang="lv">Jāapstiprina</span></div>
+  <div class="resa-list">
+    <div class="resa-card"><div class="resa-icon">🗼</div><div class="resa-info"><div class="resa-name"><span data-lang="fr">Tour Eiffel au crépuscule</span><span data-lang="lv">Eifeļa tornis krēslā</span></div><div class="resa-sub"><span data-lang="fr">Jeudi 25 après Casimir · ~22h00</span><span data-lang="lv">Ceturtdiena, 25. pēc Casimir · ~22:00</span></div></div><span class="pill pill-opt"><span data-lang="fr">À confirmer</span><span data-lang="lv">Jāapstiprina</span></span></div>
+    <div class="resa-card"><div class="resa-icon">🍽️</div><div class="resa-info"><div class="resa-name">La Table d'Alice — Versailles</div><div class="resa-sub"><span data-lang="fr">Jeudi 25 midi · Sans réservation</span><span data-lang="lv">Ceturtdiena, 25. pusdienas · Bez rezervācijas</span></div></div><span class="pill pill-opt"><span data-lang="fr">Option</span><span data-lang="lv">Iespēja</span></span></div>
+    <div class="resa-card"><div class="resa-icon">🎨</div><div class="resa-info"><div class="resa-name"><span data-lang="fr">Déjeuner vendredi midi</span><span data-lang="lv">Piektdienas pusdienas</span></div><div class="resa-sub"><span data-lang="fr">Repas de clôture · À définir</span><span data-lang="lv">Noslēguma ēdienreize · Jānosaka</span></div></div><span class="pill pill-opt"><span data-lang="fr">À définir</span><span data-lang="lv">Jānosaka</span></span></div>
+  </div>
+
+  <div class="sec-title">📅 <span data-lang="fr">Infos pratiques</span><span data-lang="lv">Praktiska info</span></div>
+  <div class="recap-grid">
+    <div class="recap-card"><div class="recap-label"><span data-lang="fr">Logement</span><span data-lang="lv">Mājvieta</span></div><div class="recap-val">Saint-Cloud</div><div class="recap-sub">29 rue Gounod</div></div>
+    <div class="recap-card"><div class="recap-label"><span data-lang="fr">Arrivée</span><span data-lang="lv">Ierašanās</span></div><div class="recap-val"><span data-lang="fr">Sam 20 juin</span><span data-lang="lv">20. jūnijs</span></div><div class="recap-sub">22h45 · CDG 2D</div></div>
+    <div class="recap-card"><div class="recap-label"><span data-lang="fr">Départ Arturs</span><span data-lang="lv">Arturs izlidojums</span></div><div class="recap-val"><span data-lang="fr">Ven 26 juin</span><span data-lang="lv">26. jūnijs</span></div><div class="recap-sub">17h15 · CDG 2D</div></div>
+    <div class="recap-card"><div class="recap-label"><span data-lang="fr">Ton train</span><span data-lang="lv">Tavs vilciens</span></div><div class="recap-val"><span data-lang="fr">Ven 26 juin</span><span data-lang="lv">26. jūnijs</span></div><div class="recap-sub">18h45 · <span data-lang="fr">Gare de Lyon</span><span data-lang="lv">Lionas stacija</span></div></div>
+    <div class="recap-card"><div class="recap-label"><span data-lang="fr">Transport</span><span data-lang="lv">Transports</span></div><div class="recap-val"><span data-lang="fr">Voiture + métro</span><span data-lang="lv">Auto + metro</span></div></div>
+    <div class="recap-card"><div class="recap-label"><span data-lang="fr">Fête Musique</span><span data-lang="lv">Mūzikas svētki</span></div><div class="recap-val">21 <span data-lang="fr">juin</span><span data-lang="lv">jūnijs</span></div><div class="recap-sub">fetedelamusique.culture.gouv.fr</div></div>
+  </div>
+</div>
+
+</div><!-- /app-scroll -->
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="nav-btn active" onclick="go(0,this)"><span class="nav-day">20</span><span class="nav-label">Sam</span></button>
-  <button class="nav-btn" onclick="go(1,this)"><span class="nav-day">21</span><span class="nav-label">Dim</span></button>
-  <button class="nav-btn" onclick="go(2,this)"><span class="nav-day">22</span><span class="nav-label">Lun</span></button>
-  <button class="nav-btn" onclick="go(3,this)"><span class="nav-day">23</span><span class="nav-label">Mar</span></button>
-  <button class="nav-btn" onclick="go(4,this)"><span class="nav-day">24</span><span class="nav-label">Mer</span></button>
-  <button class="nav-btn" onclick="go(5,this)"><span class="nav-day">25</span><span class="nav-label">Jeu</span></button>
-  <button class="nav-btn" onclick="go(6,this)"><span class="nav-day">26</span><span class="nav-label">Ven</span></button>
-  <button class="nav-btn" onclick="go(7,this)"><span class="nav-day">★</span><span class="nav-label">Résas</span></button>
+  <button class="nav-btn active" onclick="go(0,this)"><span class="nav-day">20</span><span class="nav-label"><span data-lang="fr">Sam</span><span data-lang="lv">Se</span></span></button>
+  <button class="nav-btn" onclick="go(1,this)"><span class="nav-day">21</span><span class="nav-label"><span data-lang="fr">Dim</span><span data-lang="lv">Sv</span></span></button>
+  <button class="nav-btn" onclick="go(2,this)"><span class="nav-day">22</span><span class="nav-label"><span data-lang="fr">Lun</span><span data-lang="lv">Pr</span></span></button>
+  <button class="nav-btn" onclick="go(3,this)"><span class="nav-day">23</span><span class="nav-label"><span data-lang="fr">Mar</span><span data-lang="lv">Ot</span></span></button>
+  <button class="nav-btn" onclick="go(4,this)"><span class="nav-day">24</span><span class="nav-label"><span data-lang="fr">Mer</span><span data-lang="lv">Tr</span></span></button>
+  <button class="nav-btn" onclick="go(5,this)"><span class="nav-day">25</span><span class="nav-label"><span data-lang="fr">Jeu</span><span data-lang="lv">Ce</span></span></button>
+  <button class="nav-btn" onclick="go(6,this)"><span class="nav-day">26</span><span class="nav-label"><span data-lang="fr">Ven</span><span data-lang="lv">Pi</span></span></button>
+  <button class="nav-btn" onclick="go(7,this)"><span class="nav-day">★</span><span class="nav-label"><span data-lang="fr">Résas</span><span data-lang="lv">Rez.</span></span></button>
 </nav>
 
 <script>
@@ -970,12 +655,22 @@ function go(i, btn) {
   scroll.scrollTo({top:0, behavior:'smooth'});
 }
 
-let startX = 0, startY = 0;
-scroll.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-  startY = e.touches[0].clientY;
-}, {passive:true});
+function setLang(lang, btn) {
+  document.body.className = 'lang-' + lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  localStorage.setItem('lang', lang);
+}
 
+// Restore saved lang
+const saved = localStorage.getItem('lang');
+if (saved) {
+  const btn = document.querySelector('.lang-btn[onclick*="' + saved + '"]');
+  if (btn) setLang(saved, btn);
+}
+
+let startX = 0, startY = 0;
+scroll.addEventListener('touchstart', e => { startX = e.touches[0].clientX; startY = e.touches[0].clientY; }, {passive:true});
 scroll.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - startX;
   const dy = Math.abs(e.changedTouches[0].clientY - startY);
